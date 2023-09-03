@@ -20,7 +20,7 @@ const Signup = () => {
               if(res.data=="exist"){
                   alert("User already exists")
                 }
-              else if(res.data=="notexist"){
+              else if (res.data=="notexist"){
                   history("/home",{state:{id:username}})
                   // history("/Home") 
                 }
