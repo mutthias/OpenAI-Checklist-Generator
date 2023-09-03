@@ -16,3 +16,7 @@ DELETE http://localhost:3001/todo/delete/64eaafea73b2cb5328b51bf8
 ###
 
 PUT http://localhost:3001/todo/complete/64eaaf008b30381a9c489aa7
+
+###
+
+GET http://localhost:3001/
