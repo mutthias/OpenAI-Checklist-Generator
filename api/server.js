@@ -6,7 +6,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
- 
+
 mongoose.connect("mongodb://127.0.0.1:27017/mern-todo", {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -17,17 +17,14 @@ mongoose.connect("mongodb://127.0.0.1:27017/mern-todo", {
 const Todo = require('./models/Todo');
 const Login = require('./models/Login');
 
-app.get('/todos/:user', async (req, res) => {
-  const user = req.params.user;
-  console.log(user)
-  const todos = await Todo.find({ user: user }); // Filter tasks by user's _id
-  res.json(todos);
-}); 
+app.get('/todos', async (req, res) => { // Get request at route /todos
+  const todos = await Todo.find(); // async function,  so we need await
+  res.json(todos); // jsonify our todos 
+})
 
 app.post('/todo/new', (req,res) => {
   const todo = new Todo({
-    text: req.body.text,
-    user: req.body.user
+    text: req.body.text 
   }); 
   todo.save(); // save todo to actual collection
   res.json(todo); // parse (jsonify) todo to list 
@@ -49,15 +46,12 @@ app.get('/todo/complete/:id', async (req, res) => {
 })
 
 app.post('/signup', async (req, res) => {
-  const { username, password, _id } = req.body;
+  const { username, password } = req.body;
   const account = new Login ({
     username: username,
-    password: password,
+    password: password
   });
 
-  console.log(username)
-  console.log(password)
-  
   try {
     const check = await Login.findOne({ username: username });
 
@@ -74,4 +68,4 @@ app.post('/signup', async (req, res) => {
   
 });
 
-app.listen(3001, () => console.log("Server started on port 3001!"))  
+app.listen(3001, () => console.log("Server started on port 3001!"))
