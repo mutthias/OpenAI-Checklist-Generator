@@ -14,12 +14,12 @@ const GetTasks = async (req, res) => {
 const GetOneTask = async (req, res) => {
   const {id} = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) { // id doesn't exist
-    return res.status(404).json({error: "Task doesn't exist!"});
+    return res.status(404).json({error: "No task to get!"});
   } 
   const todo = await Todo.findById(id);
 
   if (!todo) {
-    return res.status(404).json({error: "Task doesn't exist!"});
+    return res.status(404).json({error: "No task to get!"});
   }
   
   res.status(200).json(todo);
@@ -44,13 +44,13 @@ const DeleteTask = async (req, res) => {
   const {id} = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) { // id doesn't exist
-    return res.status(404).json({error: "Task doesn't exist!"});
+    return res.status(404).json({error: "No task to delete!"});
   } 
 
   const deletetask = await Todo.findByIdAndDelete(req.params.id);
 
   if (!deletetask) {
-    return res.status(404).json({error: "Task doesn't exist!"});
+    return res.status(404).json({error: "No task to delete!"});
   }
 
   res.status(200).json(deletetask);
@@ -61,13 +61,13 @@ const UpdateTask = async (req, res) => {
   const {id} = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) { // id doesn't exist
-    return res.status(404).json({error: "Task doesn't exist!"});
+    return res.status(404).json({error: "No task to update!"});
   } 
 
   const todo = await Todo.findById(req.params.id);
 
   if (!todo) {
-    return res.status(404).json({error: "Task doesn't exist!"});
+    return res.status(404).json({error: "Task No task to update!"});
   }
 
   todo.complete = !todo.complete;

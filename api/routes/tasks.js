@@ -6,7 +6,7 @@ router.get('/', GetTasks);
 router.get('/:id', GetOneTask);
 router.post('/', CreateTask);
 router.delete('/:id', DeleteTask);
-router.patch('/:id', UpdateTask);
+router.put('/:id', UpdateTask);
 
 
 module.exports = router

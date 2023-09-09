@@ -23,9 +23,11 @@ export default function Homepage ({todo}) {
 			.catch((err) => console.error("Error: ", err));
 	}
   
-  const completeTodo = async id => {
-    const data = await fetch(API_BASE + "/api/tasks/" + id)
+  const CompleteTodo = async id => {
+    if (!id) return;
+    const data = await fetch(API_BASE + "/api/tasks/" + id, { method: "PUT" })
       .then(res => res.json());
+      
     setTodos(todos => todos.map(todo => {
       if (todo._id === data._id) {
         todo.complete = data.complete;
@@ -33,7 +35,7 @@ export default function Homepage ({todo}) {
       return todo;
     }));
   }
-
+  
   const deleteTodo = async id => {
     const data = await fetch(API_BASE + "/api/tasks/" + id, { method: "DELETE"})
       .then(res => res.json());
@@ -65,8 +67,8 @@ export default function Homepage ({todo}) {
         {
           todos.map(todo => (
             <div className={"todo " + (todo.complete ? "is-complete" : "")
-            } key={todo._id} onClick={() => completeTodo(todo._id)}>
-              <div className='checkbox' ></div>
+            } key={todo._id}>
+              <div className='checkbox' onClick={() => CompleteTodo(todo._id)}></div>
               <div className='text'>{todo.text}</div>
               <div className='delete-todo' onClick={() => deleteTodo(todo._id)}>x</div>
             </div>
