@@ -8,20 +8,38 @@ export default function Homepage ({todo}) {
   const [todos, setTodos] = useState([]);
   const [popup, Setpopup] = useState(false);
   const [newTodo, setNewTodo] = useState("");
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
+
 
   const API_BASE = 'http://localhost:3001';
 
   useEffect(() => {
     GetTodos();
-    console.log(todos)
   }, [])
 
+  useEffect(() => {
+    console.log(todos); // Log the updated todos whenever it changes
+  }, [todos]);
+
   const GetTodos = async () => {
-		await fetch(API_BASE + '/api/tasks')
-			.then(res => res.json())
-			.then(data => setTodos(data))
-			.catch((err) => console.error("Error: ", err));
-	}
+    try {
+      const response = await fetch(API_BASE + '/api/tasks');
+      if (response.ok) {
+        const data = await response.json();
+        setTodos(data);
+      } else {
+        console.error("Error fetching tasks");
+      }
+    } catch (error) {
+      console.error("Error: ", error);
+    } finally {
+      setIsLoading(false); // Set loading state to false when fetch is done
+    }
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
   
   const CompleteTodo = async id => {
     if (!id) return;
@@ -35,7 +53,7 @@ export default function Homepage ({todo}) {
       return todo;
     }));
   }
-  
+   
   const deleteTodo = async id => {
     const data = await fetch(API_BASE + "/api/tasks/" + id, { method: "DELETE"})
       .then(res => res.json());
