@@ -14,6 +14,10 @@ const TodoSchema = new Schema({
     type: String,
     default: Date.now()
   }, 
+  user_id: {
+    type: String,
+    required: true
+  }
 }, { timestamps: true })
 
 const Todo = mongoose.model("Todo", TodoSchema)

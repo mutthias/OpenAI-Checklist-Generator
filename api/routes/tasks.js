@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { GetTasks, GetOneTask, CreateTask, DeleteTask, UpdateTask } = require('../controllers/taskController')
+const requireAuth = require('../middleware/requireAuth')
+
+router.use(requireAuth);
 
 // Get all available tasks
 router.get('/', GetTasks);

@@ -6,7 +6,8 @@ const Todo = require('../models/Todo');
 
 // Get all Tasks
 const GetTasks = async (req, res) => {
-  const todos = await Todo.find({}).sort({createdAt: 1}); // async function,  so we need await
+  const user_id = req.user._id;
+  const todos = await Todo.find({user_id}).sort({createdAt: 1}); // async function,  so we need await
   res.status(200).json(todos); // jsonify our todos 
 }
 
@@ -29,8 +30,10 @@ const GetOneTask = async (req, res) => {
 // Create new task
 const CreateTask = async (req, res) => {
   try {
+    const user_id = req.user._id;
     const todo = new Todo({
-      text: req.body.text 
+      text: req.body.text,
+      user_id: user_id
     });
     todo.save();
     res.status(200).json(todo);
