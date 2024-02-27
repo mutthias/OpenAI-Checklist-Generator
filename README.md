@@ -1,6 +1,6 @@
-# A task generator???
+# A planner with OpenAI
 
-I know. This is an extremely typical CS student application. But what makes this project different is my own little twist with Open AI and that it 
+A task generator. I know. This is an extremely typical CS student application. But what makes this project different is my own little twist with Open AI and that it 
 was a big learning experience for me. It has a very simple frontend powered by React, but the backend is where the magic is. 
 
 On top of the typical functionalities of a checklist app (adding, deleting, and viewing tasks), pretend a user might have an upcoming event they don't
